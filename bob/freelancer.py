@@ -1,4 +1,3 @@
-import json
 import requests
 import os
 from datetime import datetime, timedelta
@@ -59,7 +58,7 @@ class FreelancerBob:
             "pj_min_bdg": pj_obj["budget"]["minimum"],
             "pj_max_bdg": pj_obj["budget"]["maximum"],
             "bids": pj_obj["bid_stats"]["bid_count"],
-            "avg_bid": round(pj_obj["bid_stats"]["bid_avg"], 2),
+            "avg_bid": round(pj_obj.get("bid_stats", {}).get("bid_avg", 0), 2),
             "pj_skills": pj_skills,
             "submit_dt": datetime.fromtimestamp(pj_obj["submitdate"]),
             "update_dt": datetime.fromtimestamp(pj_obj["time_updated"])

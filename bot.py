@@ -1,13 +1,14 @@
 from dotenv import load_dotenv
 import os
 import discord
-from discord import Embed, ButtonStyle, Interaction
+from discord import Embed
 from discord.ext import tasks
 from bob.logger import LOGGER
-from discord.ui import View, Button, button
 
 load_dotenv()
 from bob.freelancer import FreelancerBob
+
+BOB_SLEEP_MINS = int(os.getenv("BOB_SLEEP_MINS", 5))
 
 class BobBot(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -44,17 +45,23 @@ class BobBot(discord.Client):
 
         await gig_ch.send(embed=gig_embed)
 
-    async def on_ready(self):
-        LOGGER.info(f"{bob_client.user} has connected to discord!")
-
-        fb = FreelancerBob()
-        gig_data = fb.fetch_projects()
-
+    @tasks.loop(minutes=BOB_SLEEP_MINS)
+    async def fetch_gig(self):
         gig_ch = bob_client.get_channel(int(GUILD_ID))
-        await gig_ch.purge(limit=1000) # Purges the last 1000 messages from the channel
+        gig_data = FreelancerBob().fetch_projects()
+
+        # await gig_ch.purge(limit=1000) # Purges the last 1000 messages from the channel
 
         for gig in gig_data:
             await self.send_gig(gig, gig_ch)
+
+    @fetch_gig.before_loop
+    async def before_my_task(self):
+        await self.wait_until_ready()
+
+    async def on_ready(self):
+        LOGGER.info(f"{bob_client.user} has connected to discord!")
+        self.fetch_gig.start()
 
 if __name__ == '__main__':
 

@@ -40,7 +40,7 @@ class BobBot(discord.Client):
             url=pj_user["u_url"],
             icon_url=pj_user["u_avatar"]
         )
-        # gig_embed.set_footer(text=gfi_data["labels"], icon_url=gfi_data["avatar_url"])
+        gig_embed.set_footer(text=f"🛠️ {gig["pj_skills"]}")
 
         await gig_ch.send(embed=gig_embed)
 

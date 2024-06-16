@@ -32,19 +32,24 @@ class FreelancerBob:
             "u_avatar": f"{FR_HOST}{user_obj["avatar"]}",
             "u_url": f"{FR_HOST}/u/{u_name}"
         }
+    
+    def format_skills(self, pj_skills):
+        return ", ".join([s["name"] for s in pj_skills])
 
     def format_pj(self, pj_obj, users):    
         pj_id = pj_obj["id"]
         owner_id = pj_obj["owner_id"]
 
-        user_obj = users[str(owner_id)]
-        user_obj = self.format_user(user_obj)
+        pj_user = users[str(owner_id)]
+        pj_user = self.format_user(pj_user)
+
+        pj_skills = self.format_skills(pj_obj["jobs"])
 
         return {
             "pj_id": pj_id,
             "pj_user": {
                 "u_id": owner_id
-            } | user_obj,
+            } | pj_user,
             "pj_title": pj_obj["title"],
             "pj_desc": pj_obj["description"],
             "pj_url": f"{FR_PJ_HOST}/{pj_obj['seo_url']}",
@@ -55,6 +60,7 @@ class FreelancerBob:
             "pj_max_bdg": pj_obj["budget"]["maximum"],
             "bids": pj_obj["bid_stats"]["bid_count"],
             "avg_bid": round(pj_obj["bid_stats"]["bid_avg"], 2),
+            "pj_skills": pj_skills,
             "submit_dt": datetime.fromtimestamp(pj_obj["submitdate"]),
             "update_dt": datetime.fromtimestamp(pj_obj["time_updated"])
         }
@@ -72,7 +78,8 @@ class FreelancerBob:
                     "users_projection": {
                         "username": True, "avatar": True, "email": True, "reputation": True, "employer_reputation": True
                     },
-                    "full_description": True
+                    "full_description": True,
+                    "job_details": True
                 }
             }
         }

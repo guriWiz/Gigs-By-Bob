@@ -1,0 +1,21 @@
+---
+services:
+    gigs-by-bob:
+        image: guridock/gigs-by-bob:latest
+        container_name: gigs-by-bob-bot
+        restart: always
+
+        environment:
+            - BOB_SLEEP_MINS=${BOB_SLEEP_MINS}
+            - DISCORD_TOKEN=${DISCORD_TOKEN}
+            - GUILD_ID=${GUILD_ID}
+            - FR_HOST=${FR_HOST}
+            - FR_PJ_HOST=${FR_PJ_HOST}
+            - FR_API_HOST=${FR_PJ_HOST}
+            - FR_API_TOKEN=${FR_PJ_HOST}
+        volumes:
+            - app-data:/app
+
+volumes:
+    app-data:
+...

@@ -11,8 +11,8 @@ services:
             - GUILD_ID=${GUILD_ID}
             - FR_HOST=${FR_HOST}
             - FR_PJ_HOST=${FR_PJ_HOST}
-            - FR_API_HOST=${FR_PJ_HOST}
-            - FR_API_TOKEN=${FR_PJ_HOST}
+            - FR_API_HOST=${FR_API_HOST}
+            - FR_API_TOKEN=${FR_API_TOKEN}
         volumes:
             - app-data:/app
 

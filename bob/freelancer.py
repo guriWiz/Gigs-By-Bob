@@ -4,9 +4,10 @@ from datetime import datetime, timedelta
 from .logger import LOGGER
 
 BOB_SLEEP_MINS = int(os.getenv("BOB_SLEEP_MINS", 5))
-FR_HOST = os.getenv("FR_HOST")
 
+FR_HOST = os.getenv("FR_HOST")
 FR_PJ_HOST = os.getenv("FR_PJ_HOST")
+
 FR_API_HOST = os.getenv("FR_API_HOST")
 FR_API_TOKEN = os.getenv("FR_API_TOKEN")
 

@@ -39,6 +39,10 @@ class FreelancerBob:
     def format_pj(self, pj_obj, users):    
         pj_id = pj_obj["id"]
         owner_id = pj_obj["owner_id"]
+        avg_bid = pj_obj.get("bid_stats", {}).get("bid_avg", 0)
+
+        if avg_bid is not None:
+            avg_bid = round(avg_bid, 2)
 
         pj_user = users[str(owner_id)]
         pj_user = self.format_user(pj_user)
@@ -59,7 +63,7 @@ class FreelancerBob:
             "pj_min_bdg": pj_obj["budget"]["minimum"],
             "pj_max_bdg": pj_obj["budget"]["maximum"],
             "bids": pj_obj["bid_stats"]["bid_count"],
-            "avg_bid": round(pj_obj.get("bid_stats", {}).get("bid_avg", 0), 2),
+            "avg_bid": avg_bid,
             "pj_skills": pj_skills,
             "submit_dt": datetime.fromtimestamp(pj_obj["submitdate"]),
             "update_dt": datetime.fromtimestamp(pj_obj["time_updated"])

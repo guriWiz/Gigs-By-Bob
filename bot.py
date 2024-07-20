@@ -1,3 +1,4 @@
+import traceback
 from dotenv import load_dotenv
 import os
 import discord
@@ -13,6 +14,15 @@ BOB_SLEEP_MINS = int(os.getenv("BOB_SLEEP_MINS", 5))
 class BobBot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    async def notify_err(self, gig_ch, err, tb_msg):
+        err_embed = Embed(
+            title=err,
+            description=tb_msg,
+            color=discord.Color.dark_red()
+        )
+
+        await gig_ch.send(embed=err_embed)
 
     async def send_gig(self, gig, gig_ch):
         pj_curr = gig["pj_curr"]
@@ -48,12 +58,22 @@ class BobBot(discord.Client):
     @tasks.loop(minutes=BOB_SLEEP_MINS)
     async def fetch_gig(self):
         gig_ch = bob_client.get_channel(int(GUILD_ID))
-        gig_data = FreelancerBob().fetch_projects()
 
-        # await gig_ch.purge(limit=1000) # Purges the last 1000 messages from the channel
+        try:
+            gig_data = FreelancerBob().fetch_projects()
 
-        for gig in gig_data:
-            await self.send_gig(gig, gig_ch)
+            # await gig_ch.purge(limit=1000) # Purges the last 1000 messages from the channel
+
+            for gig in gig_data:
+                await self.send_gig(gig, gig_ch)
+
+        except Exception as err:
+            tb_msg = traceback.format_exc()
+            
+            LOGGER.error(err)
+            LOGGER.error(tb_msg)
+
+            await self.notify_err(gig_ch, err, tb_msg)
 
     @fetch_gig.before_loop
     async def before_my_task(self):

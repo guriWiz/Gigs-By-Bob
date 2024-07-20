@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for gigs-by-bob on 2024-07-01T11:47:03+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'gigs-by-bob'
+primary_region = 'gru'
+
+[build]
+
+[env]
+  BOB_SLEEP_MINS = '5'
+  FR_API_HOST = 'https://www.freelancer.com/api'
+  FR_HOST = 'https://www.freelancer.com'
+  FR_PJ_HOST = 'https://www.freelancer.com/projects'
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

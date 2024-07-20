@@ -17,8 +17,8 @@ class BobBot(discord.Client):
 
     async def notify_err(self, gig_ch, err, tb_msg):
         err_embed = Embed(
-            title=err,
-            description=tb_msg,
+            title=f"ERROR: {err}",
+            description=f"```{tb_msg}```",
             color=discord.Color.dark_red()
         )
 

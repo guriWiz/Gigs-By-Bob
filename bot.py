@@ -27,6 +27,13 @@ class BobBot(discord.Client):
     async def send_gig(self, gig, gig_ch):
         pj_curr = gig["pj_curr"]
         pj_user = gig["pj_user"]
+        pj_atch = gig["pj_atch"]
+
+        # Create attachments message
+        gig_atch = ""
+
+        for atch in pj_atch:
+            gig_atch += f"[{atch["atch_type"]}] [{atch["atch_name"]}]({atch["atch_url"]}) \n"
 
         gig_msg = ""
         gig_msg += f"**URL** - {gig['pj_url']} \n\n"
@@ -37,6 +44,11 @@ class BobBot(discord.Client):
         gig_msg += f"**Avg. Bid Price** - {pj_curr} {gig['avg_bid']} \n\n"
         gig_msg += f"**Description :** \n"
         gig_msg += f"```{gig['pj_desc']}``` \n"
+
+        if pj_atch:
+            gig_msg += f"**Attachments :** \n"
+            gig_msg += f"{gig_atch} \n"
+        
         gig_msg += f"**Submitted On** - {gig['submit_dt']} \n"
         gig_msg += f"**Updated At** - {gig['update_dt']} \n"
 

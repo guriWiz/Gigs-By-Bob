@@ -43,6 +43,20 @@ class FreelancerBob:
             pj_desc = pj_desc[:3000] + "..."
 
         return pj_desc
+    
+    def format_atch(self, pj_atch):
+        atch_d = []
+
+        for atch in pj_atch:
+            atch_d.append({
+                "atch_id": atch["id"],
+                "atch_type": atch["content_type"],
+                "atch_name": atch["filename"],
+                "atch_url": atch["url"],
+                "atch_stamp": atch["time_submitted"]
+            })
+
+        return atch_d
 
     def format_pj(self, pj_obj, users):    
         pj_id = pj_obj["id"]
@@ -57,6 +71,7 @@ class FreelancerBob:
 
         pj_skills = self.format_skills(pj_obj["jobs"])
         pj_desc = self.format_desc(pj_obj)
+        pj_atch = self.format_atch(pj_obj["attachments"])
 
         return {
             "pj_id": pj_id,
@@ -74,6 +89,7 @@ class FreelancerBob:
             "bids": pj_obj["bid_stats"]["bid_count"],
             "avg_bid": avg_bid,
             "pj_skills": pj_skills,
+            "pj_atch": pj_atch,
             "submit_dt": datetime.fromtimestamp(pj_obj["submitdate"]),
             "update_dt": datetime.fromtimestamp(pj_obj["time_updated"])
         }
@@ -92,7 +108,8 @@ class FreelancerBob:
                         "username": True, "avatar": True, "email": True, "reputation": True, "employer_reputation": True
                     },
                     "full_description": True,
-                    "job_details": True
+                    "job_details": True,
+                    "attachment_details": True
                 }
             }
         }

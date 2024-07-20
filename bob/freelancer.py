@@ -35,6 +35,14 @@ class FreelancerBob:
     
     def format_skills(self, pj_skills):
         return ", ".join([s["name"] for s in pj_skills])
+    
+    def format_desc(self, pj_obj):
+        pj_desc = pj_obj["description"]
+
+        if len(pj_desc) > 3000:
+            pj_desc = pj_desc[:3000] + "..."
+
+        return pj_desc
 
     def format_pj(self, pj_obj, users):    
         pj_id = pj_obj["id"]
@@ -48,6 +56,7 @@ class FreelancerBob:
         pj_user = self.format_user(pj_user)
 
         pj_skills = self.format_skills(pj_obj["jobs"])
+        pj_desc = self.format_desc(pj_obj)
 
         return {
             "pj_id": pj_id,
@@ -55,7 +64,7 @@ class FreelancerBob:
                 "u_id": owner_id
             } | pj_user,
             "pj_title": pj_obj["title"],
-            "pj_desc": pj_obj["description"],
+            "pj_desc": pj_desc,
             "pj_url": f"{FR_PJ_HOST}/{pj_obj['seo_url']}",
             "pj_type": pj_obj["type"],
             "bid_p": pj_obj["bidperiod"],

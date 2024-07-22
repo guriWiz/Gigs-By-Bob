@@ -101,6 +101,9 @@ class FreelancerBob:
                 "jobs": [13],
                 "from_time": self.s_time,
                 "to_time": self.e_time,
+                "languages": [
+                    "en", "hi"
+                ]
             },
             "projection": {
                 "result_projection": {

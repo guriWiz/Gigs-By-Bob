@@ -52,7 +52,7 @@ class FreelancerBob:
                 "atch_id": atch["id"],
                 "atch_type": atch["content_type"],
                 "atch_name": atch["filename"],
-                "atch_url": atch["url"],
+                "atch_url": f"https://{atch["url"]}",
                 "atch_stamp": atch["time_submitted"]
             })
 

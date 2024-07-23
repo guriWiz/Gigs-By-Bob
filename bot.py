@@ -80,7 +80,7 @@ class BobBot(discord.Client):
                 await self.send_gig(gig, gig_ch)
 
         except Exception as err:
-            err = err[:250]
+            err = str(err)[:250]
             tb_msg = traceback.format_exc()[:4000]
             
             LOGGER.error(err)

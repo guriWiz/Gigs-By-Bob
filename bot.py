@@ -33,7 +33,7 @@ class BobBot(discord.Client):
         gig_atch = ""
 
         for atch in pj_atch:
-            gig_atch += f"[{atch["atch_type"]}] [{atch["atch_name"]}]({atch["atch_url"]}) \n"
+            gig_atch += f"- [{atch["atch_name"]}]({atch["atch_url"]}) \n"
 
         gig_msg = ""
         gig_msg += f"**URL** - {gig['pj_url']} \n\n"

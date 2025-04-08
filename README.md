@@ -1,6 +1,6 @@
 <div align="center">
 <a href="#">
-    <img src="assets/images/logo.png" alt="Logo" width="80" height="80" style="border-radius: 50%;" />
+    <img src="assets/images/logo.png" alt="Logo" width="125" height="125" />
 </a>
 
 <h3 align="center">Gigs By Bob</h3>

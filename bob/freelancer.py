@@ -95,10 +95,18 @@ class FreelancerBob:
         }
 
     def fetch_projects(self):
+        """
+        Jobs: 
+            Python, Machine Learning (ML), Deep Learning, Prompt Engineering, Large Language Models (LLMs), GenAI, AI Agents,
+            Retrieval-Augmented Generation (RAG)
+        """
+        
         req_url = f"{FR_API_HOST}/projects/0.1/projects/all/"
         req_data = {
             "filter": {
-                "jobs": [13],
+                "jobs": [
+                    13, 292, 1601, 2755, 2966, 2985, 3028, 3100
+                ],
                 "from_time": self.s_time,
                 "to_time": self.e_time,
                 "languages": [
